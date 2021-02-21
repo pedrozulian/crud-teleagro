@@ -67,3 +67,18 @@ exports.login = async (req, res) => {
         return res.status(500).send({ error: error });
     }
 };
+
+exports.deletarUsuario = async (req, res) => {
+    try {
+        console.log(req.params.id_usuario, res.locals.id_usuario);
+        if (parseInt(req.params.id_usuario) !== res.locals.id_usuario) {
+            return res.status(401).send({ mensagem: 'Sem permissão para deletar usuário.' });
+        }
+        const query = `DELETE FROM usuarios
+                             WHERE id_usuario = ?`;
+        await mysql.execute(query, [req.params.id_usuario]);
+        return res.status(200).send({ mensagem: 'Usuário deletado com sucesso.' });
+    } catch (error) {
+        return res.status(500).send({ error: error });
+    }
+};
