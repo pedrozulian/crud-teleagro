@@ -70,7 +70,6 @@ exports.login = async (req, res) => {
 
 exports.deletarUsuario = async (req, res) => {
     try {
-        console.log(req.params.id_usuario, res.locals.id_usuario);
         if (parseInt(req.params.id_usuario) !== res.locals.id_usuario) {
             return res.status(401).send({ mensagem: 'Sem permissão para deletar usuário.' });
         }
