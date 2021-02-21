@@ -1,6 +1,4 @@
-'use strict';
-const { query } = require('express');
-const mysql = require('../../config/db.config');
+const mysql = require('../config/db.config');
 
 exports.getUsuarios = async (req, res) => {
     try {
