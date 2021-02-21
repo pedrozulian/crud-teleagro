@@ -34,3 +34,36 @@ exports.criarUsuario = async (req, res) => {
         return res.status(500).send({ error: error });
     }
 };
+
+exports.login = async (req, res) => {
+    try {
+        const query = `SELECT id_usuario,
+                              nome_usuario,
+                              nome,
+                              email,
+                              senha
+                         FROM usuarios
+                        WHERE email = ?`;
+        const resultado = await mysql.execute(query, [req.body.email]);
+        if (resultado.length) {
+            if (bcrypt.compareSync(req.body.senha, resultado[0].senha)) {
+                const token = jwt.sign({
+                    email: resultado[0].email,
+                    nome: resultado[0].nome,
+                    id_usuario: resultado[0].id_usuario
+                }, 'add-to-encrypt', {});
+
+            return res.status(200).send({
+                    mensagem: 'Usuário autenticado com sucesso!',
+                    id_usuario: resultado[0].id_usuario,
+                    token: token,
+                    nome: resultado[0].nome
+                });
+            };
+        };
+        return res.status(401).send({ mensagem: 'Falha na autenticação' });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({ error: error });
+    }
+};
