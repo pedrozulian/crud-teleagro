@@ -11,6 +11,10 @@ app.get('/', (req, res) => {
     res.send('Root end-point - CRUD TeleAgro');
 });
 
+// Rotas de Usuários
+const usuariosRoute = require('./src/routes/usuarios.routes');
+app.use('/usuarios', usuariosRoute);
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });
