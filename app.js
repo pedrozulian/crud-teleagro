@@ -15,6 +15,4 @@ app.get('/', (req, res) => {
 const usuariosRoute = require('./src/routes/usuarios.routes');
 app.use('/usuarios', usuariosRoute);
 
-app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
-});
+module.exports = app;
