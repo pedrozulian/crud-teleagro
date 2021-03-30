@@ -4,7 +4,12 @@ const jwt = require('jsonwebtoken');
 
 exports.getUsuarios = async (req, res) => {
     try {
-        const query = `SELECT * FROM usuarios`;
+        const query = `SELECT nome_usuario,
+                              nome,
+                              email,
+                              cidade,
+                              uf
+                         FROM usuarios`;
         const resultado = await mysql.execute(query);
         return res.status(200).send({ usuarios: resultado });
     } catch (error) {
