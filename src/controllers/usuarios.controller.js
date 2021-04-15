@@ -31,12 +31,25 @@ exports.criarUsuario = async (req, res) => {
             req.body.uf,
             hash
         ]);
-        return res.status(200).send({ resultado: 'Usuário criado!' });
+        return res.status(200).send({
+            error: false,
+            mensagem: 'Usuário criado com sucesso!',
+            email: req.body.email,
+            status: 200
+        });
     } catch (error) {
         if (error.code === 'ER_DUP_ENTRY') {
-            return res.status(406).send({ error: 'E-mail e/ou Nome Usuário já cadastrado' });
+            return res.status(406).send({ 
+                error: true,
+                mensagem: 'E-mail e/ou Nome Usuário já cadastrado',
+                status: 406
+            });
         }
-        return res.status(500).send({ error: error });
+        return res.status(500).send({
+            error: true,
+            mensagem: 'Ocorreu um problema! Veja se os dados estão corretos.',
+            status: 500
+        });
     }
 };
 
