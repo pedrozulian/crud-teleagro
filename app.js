@@ -15,6 +15,8 @@ app.get('/', (req, res) => {
 
 // Rotas de Usuários
 const usuariosRoute = require('./src/routes/usuarios.routes');
+const publicacaoesRoute = require('./src/routes/publicacoes.routes');
 app.use('/usuarios', usuariosRoute);
+app.use('/publicacoes', publicacaoesRoute);
 
 module.exports = app;
