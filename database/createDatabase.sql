@@ -40,3 +40,13 @@ CREATE TABLE IF NOT EXISTS `publicacoes` (
     FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
     FOREIGN KEY (id_imagem)  REFERENCES imagens (id_imagem)
 );
+
+CREATE TABLE IF NOT EXISTS `comentarios` (
+    id_comentario INT NOT NULL AUTO_INCREMENT,
+    id_publicacao INT NOT NULL,
+    id_usuario INT NOT NULL,
+    texto LONGTEXT,
+    PRIMARY KEY (id_comentario),
+    FOREIGN KEY (id_publicacao) REFERENCES publicacoes (id_publicacao),
+    FOREIGN KEY (id_usuario)  REFERENCES usuarios (id_usuario)
+);
