@@ -99,3 +99,27 @@ exports.deletarUsuario = async (req, res) => {
         return res.status(500).send({ error: error });
     }
 };
+
+exports.perfil = async (req, res) => {
+    try {
+        const query = `
+                SELECT U.nome_usuario,
+                U.nome,
+                U.email,
+                U.cidade,
+                U.uf,
+                P.id_imagem,
+                I.url
+           FROM usuarios U
+        LEFT JOIN publicacoes P
+             ON P.id_usuario = U.id_usuario
+        LEFT JOIN imagens I
+             ON I.id_tipo = 1
+          WHERE U.id_usuario = ?;`
+        
+        const resultado = await mysql.execute(query, [req.params.id_usuario]);
+        return res.status(200).send(resultado);
+    } catch (error) {
+        return res.status(500).send({ error: error });
+    }
+}
