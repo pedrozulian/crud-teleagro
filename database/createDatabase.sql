@@ -50,3 +50,34 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
     FOREIGN KEY (id_publicacao) REFERENCES publicacoes (id_publicacao),
     FOREIGN KEY (id_usuario)  REFERENCES usuarios (id_usuario)
 );
+
+DROP PROCEDURE IF EXISTS `pr_addPublicacao`;
+CREATE PROCEDURE pr_addPublicacao (
+
+   IN _id_usuario     INT,
+   IN _id_tipo_imagem INT,
+   IN _url_imagem     LONGTEXT,
+   IN _texto          LONGTEXT
+   )
+BEGIN
+
+    INSERT INTO imagens (
+       id_tipo,
+       url
+     ) VALUES (
+       _id_tipo_imagem,
+       _url_imagem
+     );
+
+    SET @id_imagem = LAST_INSERT_ID();
+
+    INSERT INTO publicacoes (
+        id_usuario,
+        id_imagem,
+        texto
+    ) VALUES (
+        _id_usuario,
+        @id_imagem,
+        _texto
+    );
+END;
