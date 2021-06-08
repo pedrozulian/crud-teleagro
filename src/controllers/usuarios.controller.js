@@ -102,20 +102,16 @@ exports.deletarUsuario = async (req, res) => {
 
 exports.perfil = async (req, res) => {
     try {
+        console.log(req.params.id_usuario);
         const query = `
-                SELECT U.nome_usuario,
-                U.nome,
-                U.email,
-                U.cidade,
-                U.uf,
-                P.id_imagem,
-                I.url
-           FROM usuarios U
-        LEFT JOIN publicacoes P
-             ON P.id_usuario = U.id_usuario
-        LEFT JOIN imagens I
-             ON I.id_tipo = 1
-          WHERE U.id_usuario = ?;`
+            SELECT U.nome_usuario,
+                    U.nome,
+                    U.email,
+                    U.cidade,
+                    U.uf,
+                    U.foto
+               FROM usuarios U
+              WHERE U.id_usuario = ?;`
         
         const resultado = await mysql.execute(query, [req.params.id_usuario]);
         return res.status(200).send(resultado);
