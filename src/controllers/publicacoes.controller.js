@@ -23,3 +23,25 @@ exports.addPostagem = async (req, res) => {
         return res.status(500).send({ error: error });
     }
 }
+
+exports.getPostagensUsuario = async (req, res) => {
+    try {
+        const query = `
+             SELECT P.id_publicacao,
+                    P.id_usuario,
+                    P.texto,
+                    U.nome_usuario,
+                    I.url,
+                    I.id_tipo   AS "id_tipo_imagem"
+               FROM publicacoes AS P
+         INNER JOIN imagens     AS I
+                 ON I.id_imagem = P.id_imagem
+         INNER JOIN usuarios    AS U
+                 ON U.id_usuario = P.id_usuario
+              WHERE P.id_usuario = ?;`;
+              resultado = await mysql.execute(query, [req.params.id_usuario]);
+              return res.status(200).send(resultado);
+    } catch (error) {
+        return res.status(500).send({ error: error });
+    }
+}
